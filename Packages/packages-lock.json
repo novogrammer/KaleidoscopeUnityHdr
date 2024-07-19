@@ -1,5 +1,45 @@
 {
   "dependencies": {
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#2.5.3",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "64792b672d35e43b3412fc74861f8bdbf41e3a6f"
+    },
+    "com.github.asus4.mediapipe": {
+      "version": "file:com.github.asus4.mediapipe",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.github.asus4.tflite": "2.16.1-p1",
+        "com.github.asus4.tflite.common": "2.16.1-p1"
+      }
+    },
+    "com.github.asus4.texture-source": {
+      "version": "0.3.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.video": "1.0.0"
+      },
+      "url": "https://registry.npmjs.com"
+    },
+    "com.github.asus4.tflite": {
+      "version": "file:com.github.asus4.tflite",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.github.asus4.tflite.common": {
+      "version": "file:com.github.asus4.tflite.common",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.burst": "1.8.12",
+        "com.github.asus4.tflite": "2.16.1-p1"
+      }
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.0",
       "depth": 0,
@@ -11,7 +51,7 @@
     },
     "com.unity.burst": {
       "version": "1.8.16",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
