@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facingPriorities: 0000000001000000
   kindPriority: 010000000200000004000000
-  resolution: {x: 1270, y: 720}
+  resolution: {x: 1280, y: 720}
   frameRate: 60

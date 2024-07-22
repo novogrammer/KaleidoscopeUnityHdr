@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf62dfb39bf740a6ac1af02a38c56e9, type: 3}
   m_Name: WebCamTextureSource-Back
   m_EditorClassIdentifier: 
-  kindFilter: 11
-  facingFilter: -1
-  resolution: {x: 1270, y: 720}
+  facingPriorities: 0100000000000000
+  kindPriority: 010000000200000004000000
+  resolution: {x: 1280, y: 720}
   frameRate: 60
