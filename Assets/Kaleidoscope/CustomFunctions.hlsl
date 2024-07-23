@@ -33,6 +33,10 @@ float len2(float2 v){
     return dot(v,v);
 }
 
+float map(float value, float min1, float max1, float min2, float max2) {
+  return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+}
+
 // Get the rotation matrix from an axis and an angle (in radians)
 float3x3 rotationAxisAngle( float3 v,  float a )
 {
@@ -112,6 +116,10 @@ void Kaleidoscope_float(float2 input, float2 center, float unitLength, float rot
     )+center;
 }
 
+void CircleMask_float(float2 coordUv, float2 coordCenter, float radiusMin, float radiusMax, out float mask){
+  float l=sqrt(len2(coordUv - coordCenter));
+  mask=pow(1.0 - clamp(map(l,radiusMin,radiusMax,0.0,1.0),0.0,1.0),2.0);
+}
 
 
 // my first function
