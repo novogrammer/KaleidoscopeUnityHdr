@@ -29,6 +29,7 @@ float2 mod_gl(float2 x, float2 y)
   return x - y * floor(x / y);
 }
 
+// from my shadertoy https://www.shadertoy.com/view/ltGGRW
 float len2(float2 v){
     return dot(v,v);
 }

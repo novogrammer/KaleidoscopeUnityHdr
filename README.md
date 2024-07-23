@@ -68,3 +68,17 @@ HDROutputSettings.main.RequestHDRModeChange(true);
 ```
 
 
+## 開発で困ったことと対処のメモ
+
+### ShaderGraphのPropertyの値がうまくCustom Functionに渡せない
+値を直接指定すると呼び出せる。<br>
+Inspectorでは渡せているように見える。<br>
+NaNかInfinityが渡されているような変な計算結果になる。
+
+問題が起きているプロパティの名前を`dummy`などに変える。<br>
+そのプロパティを使わずに次のプロパティを使うと何故か直る。
+
+
+### Unityで`.shadergraph`のインポートが終わらないとき
+一度プロジェクトの外に出し、インポートし直す
+
