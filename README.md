@@ -55,7 +55,7 @@ Create > Shader Graph > URP > Fullscreen Shader Graph
 
 `Add Renderer Feature`から`Full Screen Pass Renderer Feature`を選び追加する。<br>
 先ほど作ったシェーダーグラフのマテリアルを設定する<br>
-`Inject Point`を`After Rendering Post Processing`に変更する
+`Inject Point`を`Before Rendering Post Processing`に変更する
 
 ### Custom Function Nodeを作る
 
