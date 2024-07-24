@@ -11,8 +11,8 @@ public class PostEffectController : MonoBehaviour
   [SerializeField] private Material _material;
 
   Vector2 center=new Vector2(0.25f,0.25f);
-  float radiusMin=0.69f;
-  float radiusMax=0.7f;
+  float radiusMin=0.1f;
+  float radiusMax=0.5f;
 
   // Start is called before the first frame update
   void Start()
