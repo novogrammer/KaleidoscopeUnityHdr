@@ -17,9 +17,7 @@ MonoBehaviour:
   m_PlatformId: 0d2129357eac403d8b359c2dcbf82502
   m_PlatformBuildProfile:
     rid: 1159931361388134400
-  m_Scenes:
-  - m_enabled: 1
-    m_path: Assets/Kaleidoscope/Kaleidoscope.unity
+  m_Scenes: []
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings:

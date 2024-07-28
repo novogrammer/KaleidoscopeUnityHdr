@@ -32,7 +32,7 @@ public sealed class FaceMeshController : MonoBehaviour
     [SerializeField] private Material _kaleidoscopeMaterial;
 
     [SerializeField]
-    private bool canDrawDebug = true;
+    private bool canDrawDebug = false;
 
     private FaceDetect faceDetect;
     private FaceMesh faceMesh;
