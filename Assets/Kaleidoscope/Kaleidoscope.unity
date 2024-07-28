@@ -882,7 +882,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1080443238}
   m_CullTransparentMesh: 0
---- !u!1 &1453601105
+--- !u!1 &1084745941
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -890,41 +890,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1453601107}
-  - component: {fileID: 1453601109}
-  - component: {fileID: 1453601108}
+  - component: {fileID: 1084745944}
+  - component: {fileID: 1084745943}
+  - component: {fileID: 1084745942}
   m_Layer: 0
-  m_Name: FaceMesh Sample
+  m_Name: FaceMeshController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1453601107
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453601105}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1453601108
+--- !u!114 &1084745942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453601105}
+  m_GameObject: {fileID: 1084745941}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a099b315791a94e8a80ae60fec0a3e9f, type: 3}
+  m_Script: {fileID: 11500000, guid: 796e6db622a004064b8c8592db446b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   faceModelFile: mediapipe/face_detection_front.tflite
@@ -934,13 +919,13 @@ MonoBehaviour:
   fullInputPreview: {fileID: 1656074239}
   croppedView: {fileID: 1080443240}
   faceMaterial: {fileID: 2100000, guid: ce4395895e48b4816a7918015df6fe85, type: 2}
---- !u!114 &1453601109
+--- !u!114 &1084745943
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453601105}
+  m_GameObject: {fileID: 1084745941}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be5e5635fba104ec29475e42f3b5a517, type: 3}
@@ -967,6 +952,21 @@ MonoBehaviour:
   OnAspectChange:
     m_PersistentCalls:
       m_Calls: []
+--- !u!4 &1084745944
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084745941}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1656074235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,7 +1153,7 @@ PrefabInstance:
     - target: {fileID: 173531016972836179, guid: a20533af9a9a94af494156c17e85a9e8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1453601109}
+      objectReference: {fileID: 0}
     - target: {fileID: 173531016972836179, guid: a20533af9a9a94af494156c17e85a9e8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: NextSource
@@ -1310,8 +1310,8 @@ SceneRoots:
   - {fileID: 32141217}
   - {fileID: 1051232098}
   - {fileID: 780088505}
-  - {fileID: 1453601107}
   - {fileID: 841425347}
   - {fileID: 839455927}
   - {fileID: 1787716609}
   - {fileID: 164079813}
+  - {fileID: 1084745944}
