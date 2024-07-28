@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿// based on FaceMesh/FaceMeshSample.cs
+using System.Linq;
 using TensorFlowLite;
 using TextureSource;
 using Unity.Mathematics;
@@ -26,10 +27,12 @@ public sealed class FaceMeshController : MonoBehaviour
     private RawImage fullInputPreview = null;
 
     [SerializeField]
-    private RawImage croppedView = null;
+    private Material faceMaterial = null;
+
+    [SerializeField] private Material _kaleidoscopeMaterial;
 
     [SerializeField]
-    private Material faceMaterial = null;
+    private bool canDrawDebug = true;
 
     private FaceDetect faceDetect;
     private FaceMesh faceMesh;
@@ -120,7 +123,6 @@ public sealed class FaceMeshController : MonoBehaviour
 
         faceMesh.Face = detectionResult;
         faceMesh.Run(texture);
-        croppedView.texture = faceMesh.InputTexture;
         meshResult = faceMesh.GetResult();
 
         if (meshResult.score < 0.5f)
@@ -135,11 +137,33 @@ public sealed class FaceMeshController : MonoBehaviour
         }
     }
 
+    private Rect RemapRect(Vector3 min,Vector3 max,Rect originalRect)
+    {
+        Rect rectFlipedY=originalRect.FlipY();
+        Rect rect = MathTF.Lerp((Vector3)min, (Vector3)max, rectFlipedY);
+        
+        // クランプされてしまうので上書きする
+        rect.x=Mathf.LerpUnclamped(min.x,max.x,rectFlipedY.x);
+        rect.y=Mathf.LerpUnclamped(min.y,max.y,rectFlipedY.y);
+        return rect;
+    }
+    private float3 RemapPoint(float3 min,float3 max,Vector2 originalPoint)
+    {
+        float3 point=math.lerp(min, max, new float3(originalPoint.x, 1f - originalPoint.y, 0));
+        return point;
+    }
+    
+
     private void DrawResults(FaceDetect.Result detection, FaceMesh.Result face)
     {
         inputPreview.rectTransform.GetWorldCorners(rtCorners);
         float3 min = rtCorners[0];
         float3 max = rtCorners[2];
+
+        if(!this._kaleidoscopeMaterial)
+        {
+            Debug.LogWarning("_kaleidoscopeMaterial not found");
+        }
 
         // Draw Face Detection
         if (detection != null)
@@ -147,39 +171,74 @@ public sealed class FaceMeshController : MonoBehaviour
             // draw.color = Color.blue;
             draw.color = new Color(3,0,0,1);
             // draw.color = new Color(0,3,0,1);
-            Rect rect = MathTF.Lerp((Vector3)min, (Vector3)max, detection.rect.FlipY());
-            
-            // クランプされてしまうので上書きする
-            rect.x=Mathf.LerpUnclamped(min.x,max.x,detection.rect.FlipY().x);
-            rect.y=Mathf.LerpUnclamped(min.y,max.y,detection.rect.FlipY().y);
+            Rect rect = this.RemapRect(min, max, detection.rect);
 
-            draw.Rect(rect, 0.05f);
-            foreach (Vector2 p in detection.keypoints)
+            if(this.canDrawDebug)
             {
-                draw.Point(math.lerp(min, max, new float3(p.x, 1f - p.y, 0)), 0.1f);
+                draw.Rect(rect, 0.05f);
+                foreach (Vector2 p in detection.keypoints)
+                {
+                    float3 point=this.RemapPoint(min,max,p);
+                    draw.Point(point, 0.1f);
+                }
+                draw.Apply();
             }
-            draw.Apply();
+            if(this._kaleidoscopeMaterial)
+            {
+                Vector2 center=detection.rect.FlipY().center;
+                float aspect=faceDetect.InputTransformMatrix.m11/faceDetect.InputTransformMatrix.m00;
+                center.x= (center.x - 0.5f) / aspect + 0.5f;
+
+                float radiusMin=0.1f;
+                float radiusMax=0.5f;
+
+                this._kaleidoscopeMaterial.SetVector("_center",center);
+                this._kaleidoscopeMaterial.SetFloat("_radiusMin",radiusMin);
+                this._kaleidoscopeMaterial.SetFloat("_radiusMax",radiusMax);
+            // Debug.Log("OK");
+            }
+        }else{
+            if(this._kaleidoscopeMaterial)
+            {
+                Vector2 center=new Vector2(-1f,-1f);
+                float radiusMin=0.1f;
+                float radiusMax=0.5f;
+
+                this._kaleidoscopeMaterial.SetVector("_center",center);
+                this._kaleidoscopeMaterial.SetFloat("_radiusMin",radiusMin);
+                this._kaleidoscopeMaterial.SetFloat("_radiusMax",radiusMax);
+            // Debug.Log("OK");
+            }
+
         }
 
         if (face != null)
         {
-            // Draw face
-            draw.color = Color.green;
-            float zScale = (max.x - min.x) / 2;
-            for (int i = 0; i < face.keypoints.Length; i++)
+            if(this.canDrawDebug)
             {
-                float3 kp = face.keypoints[i];
-                float3 p = math.lerp(min, max, kp);
-                // TODO: projection is not correct
-                p.z = kp.z * zScale;
+                // Draw face
+                draw.color = Color.green;
+                float zScale = (max.x - min.x) / 2;
+                for (int i = 0; i < face.keypoints.Length; i++)
+                {
+                    float3 kp = face.keypoints[i];
+                    float3 p = math.lerp(min, max, kp);
+                    // TODO: projection is not correct
+                    p.z = kp.z * zScale;
 
-                faceVertices[i] = p;
-                draw.Point(p, 0.05f);
+                    faceVertices[i] = p;
+                    if(this.canDrawDebug)
+                    {
+                        draw.Point(p, 0.05f);
+                    }
+                }
+                draw.Apply();
             }
-            draw.Apply();
 
             // Update Mesh
             FaceMeshBuilder.UpdateMesh(faceMeshFilter.sharedMesh, faceVertices);
         }
+
+
     }
 }
