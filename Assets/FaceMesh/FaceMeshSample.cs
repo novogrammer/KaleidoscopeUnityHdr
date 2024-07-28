@@ -23,9 +23,6 @@ public sealed class FaceMeshSample : MonoBehaviour
     private RawImage inputPreview = null;
 
     [SerializeField]
-    private RawImage fullInputPreview = null;
-
-    [SerializeField]
     private RawImage croppedView = null;
 
     [SerializeField]
@@ -40,7 +37,6 @@ public sealed class FaceMeshSample : MonoBehaviour
     private FaceMesh.Result meshResult;
     private readonly Vector3[] rtCorners = new Vector3[4];
     private Material previewMaterial;
-    private Material fullPreviewMaterial;
 
 
     private void Start()
@@ -51,9 +47,6 @@ public sealed class FaceMeshSample : MonoBehaviour
 
         previewMaterial = new Material(Shader.Find("Hidden/TFLite/InputMatrixPreview"));
         inputPreview.material = previewMaterial;
-
-        fullPreviewMaterial = new Material(Shader.Find("Hidden/TFLite/InputMatrixPreview"));
-        fullInputPreview.material = fullPreviewMaterial;
 
         // Create Face Mesh Renderer
         {
@@ -85,7 +78,6 @@ public sealed class FaceMeshSample : MonoBehaviour
         faceMesh?.Dispose();
         draw?.Dispose();
         Destroy(previewMaterial);
-        Destroy(fullPreviewMaterial);
     }
 
     private void Update()
@@ -101,14 +93,6 @@ public sealed class FaceMeshSample : MonoBehaviour
 
             inputPreview.texture = texture;
             previewMaterial.SetMatrix("_TransformMatrix", faceDetect.InputTransformMatrix);
-            fullInputPreview.texture = texture;
-
-            // Debug.Log(faceDetect.InputTransformMatrix.ToString());
-            if (fullInputPreview.TryGetComponent(out UnityEngine.UI.AspectRatioFitter aspectRatioFilter))
-            {
-                float aspect=faceDetect.InputTransformMatrix.m11/faceDetect.InputTransformMatrix.m00;
-                aspectRatioFilter.aspectRatio=aspect;
-            }
 
             detectionResult = faceDetect.GetResults().FirstOrDefault();
 
@@ -144,15 +128,8 @@ public sealed class FaceMeshSample : MonoBehaviour
         // Draw Face Detection
         if (detection != null)
         {
-            // draw.color = Color.blue;
-            draw.color = new Color(3,0,0,1);
-            // draw.color = new Color(0,3,0,1);
+            draw.color = Color.blue;
             Rect rect = MathTF.Lerp((Vector3)min, (Vector3)max, detection.rect.FlipY());
-            
-            // クランプされてしまうので上書きする
-            rect.x=Mathf.LerpUnclamped(min.x,max.x,detection.rect.FlipY().x);
-            rect.y=Mathf.LerpUnclamped(min.y,max.y,detection.rect.FlipY().y);
-
             draw.Rect(rect, 0.05f);
             foreach (Vector2 p in detection.keypoints)
             {
