@@ -185,28 +185,28 @@ public sealed class FaceMeshController : MonoBehaviour
             }
             if(this._kaleidoscopeMaterial)
             {
-                Vector2 center=detection.rect.FlipY().center;
+                Vector2 center01=detection.rect.FlipY().center;
                 float aspect=faceDetect.InputTransformMatrix.m11/faceDetect.InputTransformMatrix.m00;
-                center.x= (center.x - 0.5f) / aspect + 0.5f;
+                center01.x= (center01.x - 0.5f) / aspect + 0.5f;
 
-                float radiusMin=0.1f;
-                float radiusMax=0.5f;
+                float radiusMin01=0.1f;
+                float radiusMax01=0.5f;
 
-                this._kaleidoscopeMaterial.SetVector("_center",center);
-                this._kaleidoscopeMaterial.SetFloat("_radiusMin",radiusMin);
-                this._kaleidoscopeMaterial.SetFloat("_radiusMax",radiusMax);
+                this._kaleidoscopeMaterial.SetVector("_center01",center01);
+                this._kaleidoscopeMaterial.SetFloat("_radiusMin01",radiusMin01);
+                this._kaleidoscopeMaterial.SetFloat("_radiusMax01",radiusMax01);
             // Debug.Log("OK");
             }
         }else{
             if(this._kaleidoscopeMaterial)
             {
-                Vector2 center=new Vector2(-1f,-1f);
-                float radiusMin=0.1f;
-                float radiusMax=0.5f;
+                Vector2 center01=new Vector2(-1f,-1f);
+                float radiusMin01=0.1f;
+                float radiusMax01=0.5f;
 
-                this._kaleidoscopeMaterial.SetVector("_center",center);
-                this._kaleidoscopeMaterial.SetFloat("_radiusMin",radiusMin);
-                this._kaleidoscopeMaterial.SetFloat("_radiusMax",radiusMax);
+                this._kaleidoscopeMaterial.SetVector("_center01",center01);
+                this._kaleidoscopeMaterial.SetFloat("_radiusMin01",radiusMin01);
+                this._kaleidoscopeMaterial.SetFloat("_radiusMax01",radiusMax01);
             // Debug.Log("OK");
             }
 
