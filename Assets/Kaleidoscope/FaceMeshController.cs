@@ -190,7 +190,7 @@ public sealed class FaceMeshController : MonoBehaviour
                 center01.x= (center01.x - 0.5f) / aspect + 0.5f;
 
                 float radiusMin01=0.1f;
-                float radiusMax01=0.5f;
+                float radiusMax01=1.0f;
 
                 this._kaleidoscopeMaterial.SetVector("_center01",center01);
                 this._kaleidoscopeMaterial.SetFloat("_radiusMin01",radiusMin01);
