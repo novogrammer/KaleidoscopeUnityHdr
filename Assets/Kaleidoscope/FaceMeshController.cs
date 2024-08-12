@@ -45,6 +45,13 @@ public sealed class FaceMeshController : MonoBehaviour
     private Material previewMaterial;
     private Material fullPreviewMaterial;
 
+    private float targetRadius=0.0f;
+    private float currentRadius=0.0f;
+
+    private float previousTimeForRadius=0.0f;
+
+    private const float RADIUS_FADE_VELOCITY=1.0f;
+    private const float RADIUS_MAX=1.0f;
 
     private void Start()
     {
@@ -189,27 +196,28 @@ public sealed class FaceMeshController : MonoBehaviour
                 float aspect=faceDetect.InputTransformMatrix.m11/faceDetect.InputTransformMatrix.m00;
                 center01.x= (center01.x - 0.5f) / aspect + 0.5f;
 
-                float radiusMin01=0.1f;
-                float radiusMax01=1.0f;
 
                 this._kaleidoscopeMaterial.SetVector("_center01",center01);
-                this._kaleidoscopeMaterial.SetFloat("_radiusMin01",radiusMin01);
-                this._kaleidoscopeMaterial.SetFloat("_radiusMax01",radiusMax01);
             // Debug.Log("OK");
             }
+            this.targetRadius=FaceMeshController.RADIUS_MAX;
         }else{
-            if(this._kaleidoscopeMaterial)
-            {
-                Vector2 center01=new Vector2(-1f,-1f);
-                float radiusMin01=0.1f;
-                float radiusMax01=0.5f;
+            this.targetRadius=0.0f;
+        }
+        if(this._kaleidoscopeMaterial){
+            float time=Time.realtimeSinceStartup;
+            float deltaTime=time-this.previousTimeForRadius;
+            float direction=Mathf.Sign(this.targetRadius - this.currentRadius);
 
-                this._kaleidoscopeMaterial.SetVector("_center01",center01);
-                this._kaleidoscopeMaterial.SetFloat("_radiusMin01",radiusMin01);
-                this._kaleidoscopeMaterial.SetFloat("_radiusMax01",radiusMax01);
-            // Debug.Log("OK");
-            }
+            this.currentRadius+=deltaTime*FaceMeshController.RADIUS_FADE_VELOCITY*direction;
+            this.currentRadius=Mathf.Clamp(this.currentRadius,0.0f,FaceMeshController.RADIUS_MAX);
 
+            float radiusMin01=0.0f;
+            float radiusMax01=this.currentRadius;
+            this._kaleidoscopeMaterial.SetFloat("_radiusMin01",radiusMin01);
+            this._kaleidoscopeMaterial.SetFloat("_radiusMax01",radiusMax01);
+
+            this.previousTimeForRadius=time;
         }
 
         if (face != null)
