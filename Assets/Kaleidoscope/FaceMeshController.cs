@@ -51,7 +51,12 @@ public sealed class FaceMeshController : MonoBehaviour
     private float previousTimeForRadius=0.0f;
 
     private const float RADIUS_FADE_VELOCITY=1.0f;
-    private const float RADIUS_MAX=1.0f;
+    private const float RADIUS_MAIN_MAX=1.0f;
+
+    private float dummyPhaseAngle=0.0f;
+    private const float DUMMY_PHASE_ANGULAR_VELOCITY=30f*Mathf.Deg2Rad;
+
+    private const float RADIUS_DUMMY_MAX=0.5f;
 
     private void Start()
     {
@@ -200,7 +205,7 @@ public sealed class FaceMeshController : MonoBehaviour
                 this._kaleidoscopeMaterial.SetVector("_center01",center01);
             // Debug.Log("OK");
             }
-            this.targetRadius=FaceMeshController.RADIUS_MAX;
+            this.targetRadius=FaceMeshController.RADIUS_MAIN_MAX;
         }else{
             this.targetRadius=0.0f;
         }
@@ -210,12 +215,48 @@ public sealed class FaceMeshController : MonoBehaviour
             float direction=Mathf.Sign(this.targetRadius - this.currentRadius);
 
             this.currentRadius+=deltaTime*FaceMeshController.RADIUS_FADE_VELOCITY*direction;
-            this.currentRadius=Mathf.Clamp(this.currentRadius,0.0f,FaceMeshController.RADIUS_MAX);
+            this.currentRadius=Mathf.Clamp(this.currentRadius,0.0f,FaceMeshController.RADIUS_MAIN_MAX);
 
             float radiusMin01=0.0f;
             float radiusMax01=this.currentRadius;
+
+
+            this.dummyPhaseAngle=DUMMY_PHASE_ANGULAR_VELOCITY*time;
+            float s=Mathf.Sin(this.dummyPhaseAngle);
+            float c=Mathf.Cos(this.dummyPhaseAngle);
+
+            Vector2 center02;
+            float radiusMin02=0.0f;
+            float radiusMax02;
+            if(0.0f<s){
+                center02=new Vector2(0.25f,0.25f);
+                radiusMax02=s*RADIUS_DUMMY_MAX;
+            }else{
+                center02=new Vector2(0.75f,0.75f);
+                radiusMax02=s*-1.0f*RADIUS_DUMMY_MAX;
+            }
+
+            Vector2 center03;
+            float radiusMin03=0.0f;
+            float radiusMax03;
+            if(0.0f<c){
+                center03=new Vector2(0.75f,0.25f);
+                radiusMax03=c*RADIUS_DUMMY_MAX;
+            }else{
+                center03=new Vector2(0.25f,0.75f);
+                radiusMax03=c*-1.0f*RADIUS_DUMMY_MAX;
+            }
+
             this._kaleidoscopeMaterial.SetFloat("_radiusMin01",radiusMin01);
             this._kaleidoscopeMaterial.SetFloat("_radiusMax01",radiusMax01);
+
+            this._kaleidoscopeMaterial.SetVector("_center02",center02);
+            this._kaleidoscopeMaterial.SetFloat("_radiusMin02",radiusMin02);
+            this._kaleidoscopeMaterial.SetFloat("_radiusMax02",radiusMax02);
+
+            this._kaleidoscopeMaterial.SetVector("_center03",center03);
+            this._kaleidoscopeMaterial.SetFloat("_radiusMin03",radiusMin03);
+            this._kaleidoscopeMaterial.SetFloat("_radiusMax03",radiusMax03);
 
             this.previousTimeForRadius=time;
         }
