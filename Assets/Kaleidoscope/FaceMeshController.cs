@@ -56,7 +56,7 @@ public sealed class FaceMeshController : MonoBehaviour
     private float dummyPhaseAngle=0.0f;
     private const float DUMMY_PHASE_ANGULAR_VELOCITY=30f*Mathf.Deg2Rad;
 
-    private const float RADIUS_DUMMY_MAX=0.5f;
+    private const float RADIUS_DUMMY_MAX=1.0f;
 
     private void Start()
     {
@@ -219,6 +219,7 @@ public sealed class FaceMeshController : MonoBehaviour
 
             float radiusMin01=0.0f;
             float radiusMax01=this.currentRadius;
+            float unitLength01=0.5f;
 
 
             this.dummyPhaseAngle=DUMMY_PHASE_ANGULAR_VELOCITY*time;
@@ -228,35 +229,44 @@ public sealed class FaceMeshController : MonoBehaviour
             Vector2 center02;
             float radiusMin02=0.0f;
             float radiusMax02;
+            float unitLength02;
             if(0.0f<s){
                 center02=new Vector2(0.25f,0.25f);
                 radiusMax02=s*RADIUS_DUMMY_MAX;
+                unitLength02=s*0.2f;
             }else{
                 center02=new Vector2(0.75f,0.75f);
                 radiusMax02=s*-1.0f*RADIUS_DUMMY_MAX;
+                unitLength02=s*-1.0f*0.2f;
             }
 
             Vector2 center03;
             float radiusMin03=0.0f;
             float radiusMax03;
+            float unitLength03;
             if(0.0f<c){
                 center03=new Vector2(0.75f,0.25f);
                 radiusMax03=c*RADIUS_DUMMY_MAX;
+                unitLength03=c*0.2f;
             }else{
                 center03=new Vector2(0.25f,0.75f);
                 radiusMax03=c*-1.0f*RADIUS_DUMMY_MAX;
+                unitLength03=c*-1.0f*0.2f;
             }
 
             this._kaleidoscopeMaterial.SetFloat("_radiusMin01",radiusMin01);
             this._kaleidoscopeMaterial.SetFloat("_radiusMax01",radiusMax01);
+            this._kaleidoscopeMaterial.SetFloat("_unitLength01",unitLength01);
 
             this._kaleidoscopeMaterial.SetVector("_center02",center02);
             this._kaleidoscopeMaterial.SetFloat("_radiusMin02",radiusMin02);
             this._kaleidoscopeMaterial.SetFloat("_radiusMax02",radiusMax02);
+            this._kaleidoscopeMaterial.SetFloat("_unitLength02",unitLength02);
 
             this._kaleidoscopeMaterial.SetVector("_center03",center03);
             this._kaleidoscopeMaterial.SetFloat("_radiusMin03",radiusMin03);
             this._kaleidoscopeMaterial.SetFloat("_radiusMax03",radiusMax03);
+            this._kaleidoscopeMaterial.SetFloat("_unitLength03",unitLength03);
 
             this.previousTimeForRadius=time;
         }
