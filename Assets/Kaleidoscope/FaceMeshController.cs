@@ -45,12 +45,13 @@ public sealed class FaceMeshController : MonoBehaviour
     private Material previewMaterial;
     private Material fullPreviewMaterial;
 
-    private float targetRadius=0.0f;
-    private float currentRadius=0.0f;
+    private float targetFadeFactor=0.0f;
+    private float currentFadeFactor=0.0f;
 
     private float previousTimeForRadius=0.0f;
 
-    private const float RADIUS_FADE_VELOCITY=1.0f;
+    private const float RADIUS_FADE_DURATION=1.0f;
+
     private const float RADIUS_MAIN_MAX=1.0f;
 
     private float dummyPhaseAngle=0.0f;
@@ -205,21 +206,21 @@ public sealed class FaceMeshController : MonoBehaviour
                 this._kaleidoscopeMaterial.SetVector("_center01",center01);
             // Debug.Log("OK");
             }
-            this.targetRadius=FaceMeshController.RADIUS_MAIN_MAX;
+            this.targetFadeFactor=1.0f;
         }else{
-            this.targetRadius=0.0f;
+            this.targetFadeFactor=0.0f;
         }
         if(this._kaleidoscopeMaterial){
             float time=Time.realtimeSinceStartup;
             float deltaTime=time-this.previousTimeForRadius;
-            float direction=Mathf.Sign(this.targetRadius - this.currentRadius);
+            float direction=Mathf.Sign(this.targetFadeFactor - this.currentFadeFactor);
 
-            this.currentRadius+=deltaTime*FaceMeshController.RADIUS_FADE_VELOCITY*direction;
-            this.currentRadius=Mathf.Clamp(this.currentRadius,0.0f,FaceMeshController.RADIUS_MAIN_MAX);
+            this.currentFadeFactor+=deltaTime/FaceMeshController.RADIUS_FADE_DURATION*direction;
+            this.currentFadeFactor=Mathf.Clamp(this.currentFadeFactor,0.0f,1.0f);
 
             float radiusMin01=0.0f;
-            float radiusMax01=this.currentRadius;
-            float unitLength01=0.5f;
+            float radiusMax01=this.currentFadeFactor * FaceMeshController.RADIUS_MAIN_MAX;
+            float unitLength01=this.currentFadeFactor * 0.5f;
 
 
             this.dummyPhaseAngle=DUMMY_PHASE_ANGULAR_VELOCITY*time;
