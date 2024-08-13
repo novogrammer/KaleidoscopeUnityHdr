@@ -55,7 +55,7 @@ public sealed class FaceMeshController : MonoBehaviour
     private const float RADIUS_MAIN_MAX=1.0f;
 
     private float dummyPhaseAngle=0.0f;
-    private const float DUMMY_PHASE_ANGULAR_VELOCITY=30f*Mathf.Deg2Rad;
+    private const float DUMMY_PHASE_ANGULAR_VELOCITY=10f*Mathf.Deg2Rad;
 
     private const float RADIUS_DUMMY_MAX=0.5f;
 
@@ -221,7 +221,7 @@ public sealed class FaceMeshController : MonoBehaviour
 
             float radiusMin01=0.0f;
             float radiusMax01=this.currentFadeFactor * FaceMeshController.RADIUS_MAIN_MAX;
-            float unitLength01=EasingFunction.EaseOutSine(0.0f,1.0f,this.currentFadeFactor) * 0.5f;
+            float unitLength01=EasingFunction.EaseOutSine(0.0f,1.0f,this.currentFadeFactor) * 0.65f;
 
             
 
