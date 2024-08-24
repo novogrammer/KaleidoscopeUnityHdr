@@ -57,7 +57,7 @@ public sealed class FaceMeshController : MonoBehaviour
     private float dummyPhaseAngle=0.0f;
     private const float DUMMY_PHASE_ANGULAR_VELOCITY=10f*Mathf.Deg2Rad;
 
-    private const float RADIUS_DUMMY_MAX=0.5f;
+    private const float RADIUS_DUMMY_MAX=1.0f;
 
 
     private void Start()
